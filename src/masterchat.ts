@@ -145,6 +145,7 @@ export class Masterchat extends EventEmitter {
   public isLive?: boolean;
   public channelName?: string;
   public title?: string;
+  public vwCount?: number;
 
   private axiosInstance: AxiosInstance;
   private listener: ChatListener | null = null;
@@ -433,6 +434,7 @@ export class Masterchat extends EventEmitter {
     this.channelId = metadata.channelId;
     this.channelName = metadata.channelName;
     this.isLive ??= metadata.isLive;
+    this.vwCount = metadata.viewCount;
   }
 
   public async fetchMetadataFromWatch(id: string) {

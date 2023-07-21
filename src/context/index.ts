@@ -4,7 +4,7 @@ import {
   NoStreamRecordingError,
   UnavailableError,
 } from "../errors";
-import { runsToString } from "../utils";
+import { runsToString, stringify  } from "../utils";
 import { YTInitialData, YTPlayabilityStatus } from "../interfaces/yt/context";
 
 // OK duration=">0" => Archived (replay chat may be available)
@@ -122,10 +122,20 @@ export function parseMetadataFromWatch(html: string) {
   const channelName = runsToString(videoOwner.title.runs);
   const isLive = primaryInfo.viewCount!.videoViewCountRenderer.isLive ?? false;
 
+  const viewCount = primaryInfo.viewCount?.videoViewCountRenderer.isLive
+  ? Number(
+      stringify(primaryInfo.viewCount?.videoViewCountRenderer.viewCount)
+        .replace("watching now", "")
+        .trim()
+        .replace(/,/g, "")
+    )
+  : 0;
+
   return {
     title,
     channelId,
     channelName,
     isLive,
+    viewCount,
   };
 }
