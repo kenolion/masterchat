@@ -284,9 +284,10 @@ export function withContext(input: any = {}) {
 }
 
 export function durationToSeconds(durationText: string): number {
-  const match = /^(a|\d+)\s(year|month|week|day|hour|minute|second)s?$/.exec(
-    durationText
-  );
+  const match =
+    /^Member for (a|\d+)\s(year|month|week|day|hour|minute|second)s?$/.exec(
+      durationText
+    );
   if (!match) throw new Error(`Invalid duration: ${durationText}`);
 
   const [_, duration, unit] = match;

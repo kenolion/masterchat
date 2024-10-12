@@ -277,8 +277,7 @@ export function parseLiveChatMembershipItemRenderer(
   if (isMilestoneMessage) {
     const message = renderer.message ? renderer.message.runs : null;
     const durationText = renderer
-      .headerPrimaryText!.runs.slice(1)
-      .map((r) => r.text)
+      .headerPrimaryText!.runs.map((r) => r.text)
       .join("");
     // duration > membership.since
     // e.g. 12 months > 6 months
@@ -483,6 +482,13 @@ export function parseLiveChatSponsorshipsGiftPurchaseAnnouncementRenderer(
       "[action required] empty authorName (gift purchase)",
       JSON.stringify(renderer)
     );
+  }
+  if (!header.authorBadges) {
+    debugLog(
+      "[action required] empty authorBadges (gift purchase)",
+      JSON.stringify(renderer)
+    );
+    return {} as MembershipGiftPurchaseTickerContent;
   }
 
   const membership = parseMembership(
